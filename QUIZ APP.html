@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div class="titleCont">
+        <h1>QUIZ APP</h1>
+    </div>
+<div class="container">
+    <div class="main-Container">
+            <div class="realTimer"></div>
+        <div class="BOX">
+             <p class="QuestionEle"></p>
+            <div class="displays"></div>
+        <div class="btnContainer">
+            <button class="next">Next</button>
+            <button class="prev">Prev</button>
+             <button class="submitBtn">Submit</button>
+        </div>
+        </div>
+     </div>
+</div>
+    <script>
+        let next = document.querySelector(".next");
+        let prev = document.querySelector(".prev");
+        let QueElement = document.querySelector(".QuestionEle");
+        let displays = document.querySelector(".displays");
+        let timer = document.querySelector(".timer");
+        let submitBtn = document.querySelector(".submitBtn");
+        let resource = [
+            {
+                question :  " ....... is a name of a person animal place or thing",
+                answers:["Noun","Pronoun","Adjective","Verb"],
+                answer : "Noun"
+            },
+            {
+                question : " ....... is  used in place of a noun",
+                answers:["Noun","Pronoun","Adjective","Conjunction"],
+                answer: "Pronoun"
+            },
+            {
+                question : " ....... is the logest  river",
+                answers:["RichMond","Benue","Niger","Nile"],
+                answer : "Nile"
+            },
+            {
+                question : "    ....... is Used to Show Exclamations",
+                answers:["Regions","Factors","Adjective","Interjection"],
+                answer:"Interjection"
+            }
+        ]
+        let totalNumber = resource.length;
+        let currentIndex = 0;
+        let score = 0;
+        let selected;
+        num = 1;
+        let width
+        let x 
+        let realTimer = document.querySelector(".realTimer");
+    
+            function ShowQuestion(){
+                 countDown()
+                if(num == totalNumber){
+                prev.disabled = true;
+                next.disabled = true;
+                submitBtn.style.display = "block"
+            }
+                prev.disabled = true
+                let question = resource[currentIndex].question;
+                QueElement.textContent = `${num}.${question}`
+                displays.innerHTML=""
+                console.log(question);
+              let slt = resource[currentIndex].answers.forEach((que)=>{
+                    let btn = document.createElement("button");
+                    btn.textContent = que;
+                    btn.id = "btn";
+                    displays.append(btn);
+                })
+                 selected = document.querySelectorAll("#btn")
+                selected.forEach((btn)=>{
+                    btn.addEventListener("click",()=>{
+                     console.log(resource[currentIndex].answer);
+                      if(btn.textContent==resource[currentIndex].answer){
+                    console.log("correct");
+                    score++
+                      prev.disabled = true;
+                    console.log(score);
+                }
+                if(btn.clicked = true){
+                    disableKeys()
+                }
+                    })
+               })
+            }
+            function disableKeys(){
+                  selected.forEach((btn)=>{
+                        btn.disabled = true;
+                    })
+            }
+            next.addEventListener("click",()=>{
+                countDown()
+                num++
+                currentIndex++;
+                ShowQuestion()
+                prev.disabled = false;
+                 checkClick()
+            })
+            prev.addEventListener("click",()=>{
+                num--
+                currentIndex--;
+                ShowQuestion()
+            })
+            function countDown (){
+                width = 0
+                let x = setInterval(()=>{
+                    if(width!=100){
+                        width++
+                        realTimer.style.width =`${width}%`
+                    }
+                    else{
+                        prev.disabled = true;
+                        disableKeys()
+                        clearInterval(x)
+                    }
+                },120)
+            }
+            function checkClick(){
+                if(next.clicked = true && width<100){
+                     width=0;
+                }
+            }
+            submitBtn.addEventListener("click",()=>{
+                submitBtn.style.backGroundColor = "green";
+                alert(`Game Over. You Scored ${score} out of ${totalNumber}!`);
+                clearInterval(x)
+            })
+            ShowQuestion()
+    </script>
+    <style>
+           *{
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+        }
+        .submitBtn{
+            display: none;
+        }
+        .realTimer{
+            background-color: rgb(170, 68, 68);
+            height: 20px;
+        }
+        .container{
+            display: flex;
+            min-height: 100vh;
+            align-items: center;
+            justify-content: center;
+        } 
+        #btn{
+            width: 90%;
+            margin-left: 4%;
+            border-radius: 2px;
+            outline: none;
+            border: 1px solid black;
+            margin-bottom:.7em;
+
+        }
+        .main-Container{
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            height:60vh;
+            border-radius: 6px;
+            margin-top: -12em;
+            background-color: rgb(148, 196, 241);
+        }
+        .BOX{
+            background-color: white;
+            height:50vh;
+            width: 85%;
+            border-radius: 4px;
+            margin-top: 1.3em;
+            margin-left: 6.5em;
+        }
+        .displays{
+            margin-top: 2em;
+        }
+        .QuestionEle{
+            margin-top: 3em;
+            width: 90%;
+            height: 3em;
+            font-size: 17px;
+            font-weight: bold;
+            margin-left:1.4em;
+        }
+        .titleCont{
+            display: flex;
+            justify-content: center;
+            height: auto;
+            padding-top: 1em;
+        }
+        .btnContainer>button{
+            width: 6em;
+            margin-left: 1em;
+            border-radius: 2px;
+            border: 15px;
+        }
+        .btnContainer{
+            margin-top: 3rem;
+            display: flex;
+            justify-content: center;
+        }
+        @media only screen and (max-width:600px){
+             *{
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+        }
+        .submitBtn{
+            display: none;
+        }
+        .realTimer{
+            background-color: rgb(170, 68, 68);
+            height: 20px;
+        }
+        .container{
+            display: flex;
+            min-height: 100vh;
+            align-items: center;
+            justify-content: center;
+        } 
+        #btn{
+            width: 90%;
+            margin-left: 4%;
+            border-radius: 2px;
+            outline: none;
+            border: 1px solid black;
+            margin-bottom:.7em;
+
+        }
+        .main-Container{
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            height:60vh;
+            border-radius: 6px;
+            margin-top: -12em;
+            background-color: rgb(148, 196, 241);
+        }
+        .BOX{
+            background-color: white;
+            height:50vh;
+            width: 85%;
+            border-radius: 4px;
+            margin-top: 1.3em;
+            margin-left: 1.8em;
+        }
+        .displays{
+            margin-top: 2em;
+        }
+        .QuestionEle{
+            margin-top: 3em;
+            width: 90%;
+            height: 3em;
+            font-size: 13px;
+            font-weight: bold;
+            margin-left:1.4em;
+        }
+        .titleCont{
+            display: flex;
+            justify-content: center;
+            height: auto;
+            padding-top: 1em;
+        }
+        .btnContainer>button{
+            width: 6em;
+            margin-left: 1em;
+            border-radius: 2px;
+            border: 15px;
+        }
+        .btnContainer{
+            margin-top: 3rem;
+            display: flex;
+            justify-content: center;
+        }
+        }
+    </style>
+</body>
+</html>
